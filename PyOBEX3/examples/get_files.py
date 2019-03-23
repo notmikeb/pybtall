@@ -15,9 +15,13 @@ if __name__ == "__main__":
     path = sys.argv[2]
     
     services = bluetooth.find_service(uuid="1106", address=device_address)
+    port = -1
     if services:
         port = services[0]["port"]
-    
+    if port == -1:
+        raise Exception("failed to get port by uuid from remote sdp .")
+    else:
+        print("found ftp servie at port:{}".format(port))
     c = client.BrowserClient(device_address, port)
     
     response = c.connect()
