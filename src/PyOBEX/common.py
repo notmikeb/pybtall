@@ -44,7 +44,7 @@ else:
                 while data:
                     sent = self.send(data)
                     if sent > 0:
-                        print( ",".join([ str(i) for i in data[:sent]] ))
+                        print( "sent:" + ",".join([ "0x"+format(i,'02x') for i in data[:sent]] ))
                         data = data[sent:]
                     elif sent < 0:
                         raise socket.error

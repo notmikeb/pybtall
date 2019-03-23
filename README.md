@@ -34,5 +34,6 @@ enter PyOBEX3\examples folder
 
 >python pushclient.py 00:18:60:F9:50:7A 23 hello.txt
 
->python get_files.py 00:18:60:F9:50:7A /
+get the files under remote ftp server "Document" folder
+>python get_files.py 00:18:60:F9:50:7A /Document
 

@@ -25,7 +25,7 @@ class FileServer(server.BrowserServer):
         
         for header in request.header_data:
         
-            print(header)
+            print("header is " + header)
             if isinstance(header, headers.Name):
                 name = header.decode().strip(b"\x00")
                 print("Receiving request for %s" % name)

@@ -4,6 +4,35 @@ import bluetooth, os, sys
 from xml.etree import ElementTree
 from PyOBEX import client, responses
 
+# register signal handler 
+import signal
+def handler(sig, frame):
+    print('Got signal: ', sig)
+    raise Exception("error handling" + repr(sig))
+    import sys
+    sys.exit(-1)
+
+def exit_gracefully(signum, frame):
+    # restore the original signal handler as otherwise evil things will happen
+    # in raw_input when CTRL+C is pressed, and our signal handler is not re-entrant
+    signal.signal(signal.SIGINT, original_sigint)
+
+    try:
+        if input("\nReally quit? (y/n)> ").lower().startswith('y'):
+            sys.exit(1)
+
+    except KeyboardInterrupt:
+        print("Ok ok, quitting")
+        sys.exit(1)
+
+    # restore the exit gracefully handler here    
+    signal.signal(signal.SIGINT, exit_gracefully)
+	
+signal.signal(signal.SIGTERM, handler)
+signal.signal(signal.SIGABRT, handler)
+original_sigint = signal.getsignal(signal.SIGINT)
+signal.signal(signal.SIGINT, exit_gracefully)
+
 if __name__ == "__main__":
 
     if len(sys.argv) != 3:
